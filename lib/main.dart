@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -122,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
         break;
       default:
         throw UnimplementedError("no widget for $selectedIndex");
@@ -166,6 +168,27 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       }
     );
+  }
+}
+
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var listFavs = <Widget>[];
+    appState.favorites.forEach(
+      (element) { 
+        var newRow = Row(children: [Text(element.asSnakeCase)],);
+        listFavs.add(newRow);
+     });
+
+    
+
+    return ListView(scrollDirection: Axis.vertical,
+      children: listFavs,
+    );
+
   }
 }
 
