@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -177,10 +174,21 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var listFavs = <Widget>[];
+
+    listFavs.add( Padding(
+      padding: const EdgeInsets.all(20),
+      child: Text(
+          "You have ${appState.favorites.length} favorites.",
+        ),
+      )
+    );
+
     appState.favorites.forEach(
       (element) { 
-        var newRow = Row(children: [Text(element.asSnakeCase)],);
-        listFavs.add(newRow);
+        listFavs.add(ListTile(
+          leading: Icon(Icons.favorite),
+          title: Text(element.asLowerCase)
+        ));
      });
 
     
