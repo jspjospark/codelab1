@@ -47,6 +47,11 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void removeFavorite(pair) {
+    favorites.remove(pair);
+    notifyListeners();
+  }
 }
 
 /*
@@ -186,7 +191,11 @@ class FavoritesPage extends StatelessWidget {
     appState.favorites.forEach(
       (element) { 
         listFavs.add(ListTile(
-          leading: Icon(Icons.favorite),
+          leading: IconButton(
+            icon: Icon(Icons.delete, semanticLabel: "delete",), 
+            onPressed: () {
+              appState.removeFavorite(element);
+            },),
           title: Text(element.asLowerCase)
         ));
      });
